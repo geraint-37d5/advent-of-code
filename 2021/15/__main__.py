@@ -1,8 +1,7 @@
-import array
-
-import numpy as np
 from networkx import *
 from numpy import *
+from numpy import add as npadd
+from numpy import mod as npmod
 
 COMPASS = [
     array([1, 0]),
@@ -48,7 +47,7 @@ def shortest_path_risk(graph: DiGraph, matrix) -> int:
 
 def vectorized_shift_value(count):
     def shift_value(m):
-        return where(count < 1, m, np.mod(np.add(m, count + 9), 9))
+        return where(count < 1, m, npmod(npadd(m, count + 9), 9))
 
     return shift_value
 
