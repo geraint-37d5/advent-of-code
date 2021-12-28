@@ -1,4 +1,6 @@
 from __future__ import annotations
+from copy import deepcopy
+from itertools import permutations
 from math import ceil, floor
 from typing import List, Union
 
@@ -365,6 +367,33 @@ def solve_p1(data: str):
     return SFNumber.sum(numbers).magnitude()
 
 
+def solve_p2(data: str):
+    """
+    >>> data = "\\n".join([
+    ...     "[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]",
+    ...     "[[[5,[2,8]],4],[5,[[9,9],0]]]",
+    ...     "[6,[[[6,2],[5,6]],[[7,6],[4,7]]]]",
+    ...     "[[[6,[0,7]],[0,9]],[4,[9,[9,0]]]]",
+    ...     "[[[7,[6,4]],[3,[1,3]]],[[[5,5],1],9]]",
+    ...     "[[6,[[7,3],[3,2]]],[[[3,8],[5,7]],4]]",
+    ...     "[[[[5,4],[7,7]],8],[[8,3],8]]",
+    ...     "[[9,3],[[9,9],[6,[4,9]]]]",
+    ...     "[[2,[[7,7],7]],[[5,8],[[9,3],[0,2]]]]",
+    ...     "[[[[5,2],5],[8,[3,7]]],[[5,[7,5]],[4,4]]]",
+    ... ])
+    >>> solve_p2(data)
+    3993
+    """
+    numbers = SFNumber.parse_all(data)
+    magnitudes = []
+    for a, b in permutations(numbers, 2):
+        magnitudes.append((deepcopy(a) + deepcopy(b)).magnitude())
+    return max(magnitudes)
+
+
 with open("Input.txt", "r") as file:
-    p1 = solve_p1(file.read())
+    data = file.read()
+    p1 = solve_p1(data)
     print("Part 1: ", p1)
+    p2 = solve_p2(data)
+    print("Part 2: ", p2)
